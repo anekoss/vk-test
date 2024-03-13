@@ -1,4 +1,6 @@
 package com.vk.redirector.dto;
 
-public record AlbumsRequest(Long userId, Long id, String title) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record AlbumsRequest(@JsonProperty("userId") Long userId, @JsonProperty("id") Long id, @JsonProperty("title") String title) {
 }

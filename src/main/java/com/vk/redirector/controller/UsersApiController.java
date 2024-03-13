@@ -6,33 +6,33 @@ import com.vk.redirector.dto.UsersResponse;
 import com.vk.redirector.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
 @RestController
+@RequestMapping(path = "/api/users")
 @RequiredArgsConstructor
 public class UsersApiController {
     private final UsersService usersService;
 
-    @GetMapping(path = "/api/users/{id}")
-    ResponseEntity<UsersResponse> getUser(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}")
+    UsersResponse getUser(@PathVariable("id") Long id) {
         return usersService.getUser(id);
     }
 
-    @DeleteMapping(path = "/api/users/{id}")
-    ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    String deleteUser(@PathVariable("id") Long id) {
         return usersService.deleteUser(id);
     }
 
-    @PostMapping(path = "/api/users")
-    ResponseEntity<UsersResponse> createUser(@RequestBody AddUsersRequest request) {
+    @PostMapping
+    UsersResponse createUser(@RequestBody AddUsersRequest request) {
         return usersService.addUser(request);
     }
 
-    @PutMapping(path = "/api/users/{id}")
-    ResponseEntity<UsersResponse> updateUser(@PathVariable("id") Long id, @RequestBody UsersRequest request) {
+    @PutMapping(path = "/{id}")
+    UsersResponse updateUser(@PathVariable("id") Long id, @RequestBody UsersRequest request) {
         return usersService.updateUser(id, request);
     }
 

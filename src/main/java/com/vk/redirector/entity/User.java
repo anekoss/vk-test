@@ -18,7 +18,10 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
 
 
     @OneToMany(
@@ -27,12 +30,6 @@ public class User {
             orphanRemoval = true
     )
     private Set<UserRoles> roles = new HashSet<>();
-
-    public static User newUser(String name) {
-        User user = new User();
-        user.setName(name);
-        return user;
-    }
 
 
 }

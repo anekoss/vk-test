@@ -11,27 +11,28 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequestMapping(path = "/api/posts")
 @RequiredArgsConstructor
 public class PostsApiController {
     private final PostsService postsService;
 
-    @GetMapping(path = "/api/posts/{id}")
-    ResponseEntity<PostsResponse> getPost(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}")
+    PostsResponse getPost(@PathVariable("id") Long id) {
         return postsService.getPost(id);
     }
 
-    @DeleteMapping(path = "/api/posts/{id}")
-    ResponseEntity<Void> deletePost(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    String deletePost(@PathVariable("id") Long id) {
         return postsService.deletePost(id);
     }
 
-    @PostMapping(path = "/api/posts")
-    ResponseEntity<PostsResponse> createPost(@RequestBody AddPostsRequest request) {
+    @PostMapping
+    PostsResponse createPost(@RequestBody AddPostsRequest request) {
         return postsService.addPost(request);
     }
 
-    @PutMapping(path = "/api/posts/{id}")
-    ResponseEntity<PostsResponse> updatePost(@PathVariable("id") Long id, @RequestBody PostsRequest request) {
+    @PutMapping(path = "/{id}")
+    PostsResponse updatePost(@PathVariable("id") Long id, @RequestBody PostsRequest request) {
         return postsService.updatePost(id, request);
     }
 }

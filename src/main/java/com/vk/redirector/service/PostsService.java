@@ -5,9 +5,9 @@ import com.vk.redirector.dto.PostsRequest;
 import com.vk.redirector.dto.PostsResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -16,20 +16,41 @@ public class PostsService {
     private final WebClient webClient;
     private final String requestUri = "/posts/{id}";
 
-    public ResponseEntity<PostsResponse> addPost(AddPostsRequest request) {
-        return webClient.post().uri("/posts").body(request, AddPostsRequest.class).retrieve().toEntity(PostsResponse.class).block();
+    public PostsResponse addPost(AddPostsRequest request) {
+        return webClient
+                .post()
+                .uri("/posts")
+                .body(Mono.just(request), AddPostsRequest.class)
+                .retrieve()
+                .bodyToMono(PostsResponse.class).block();
     }
 
-    public ResponseEntity<Void> deletePost(Long id) {
-        return webClient.delete().uri(requestUri, id).retrieve().toBodilessEntity().block();
+    public String deletePost(Long id) {
+        return webClient
+                .delete()
+                .uri(requestUri, id)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public ResponseEntity<PostsResponse> updatePost(Long id, PostsRequest request) {
-        return webClient.put().uri(requestUri, id).body(request, PostsRequest.class).retrieve().toEntity(PostsResponse.class).block();
+    public PostsResponse updatePost(Long id, PostsRequest request) {
+        return webClient
+                .put()
+                .uri(requestUri, id)
+                .body(Mono.just(request), PostsRequest.class)
+                .retrieve()
+                .bodyToMono(PostsResponse.class)
+                .block();
     }
 
-    public ResponseEntity<PostsResponse> getPost(Long id) {
-        return webClient.get().uri(requestUri, id).retrieve().toEntity(PostsResponse.class).block();
+    public PostsResponse getPost(Long id) {
+        return webClient
+                .get()
+                .uri(requestUri, id)
+                .retrieve()
+                .bodyToMono(PostsResponse.class)
+                .block();
     }
 
 

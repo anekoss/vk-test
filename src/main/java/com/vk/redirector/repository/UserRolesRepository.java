@@ -10,4 +10,8 @@ public interface UserRolesRepository extends JpaRepository<UserRoles, Long> {
 
     Set<RoleType> findUserRolesByUserId(Long id);
 
+    Set<RoleType> findUserRolesByUserUsername(String username);
+
+
+
 }

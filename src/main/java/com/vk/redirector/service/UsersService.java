@@ -7,9 +7,9 @@ import com.vk.redirector.dto.UsersResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -19,21 +19,43 @@ public class UsersService {
     private final WebClient webClient;
     private final String requestUri = "/users/{id}";
 
-    public ResponseEntity<UsersResponse> addUser(AddUsersRequest request) {
-        return webClient.post().uri("/users").contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(request).retrieve().toEntity(UsersResponse.class).block();
+    public UsersResponse addUser(AddUsersRequest request) {
+        return webClient
+                .post()
+                .uri("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(request), AddUsersRequest.class)
+                .retrieve()
+                .bodyToMono(UsersResponse.class)
+                .block();
     }
 
-    public ResponseEntity<Void> deleteUser(Long id) {
-        return webClient.delete().uri(requestUri, id).retrieve().toBodilessEntity().block();
+    public String deleteUser(Long id) {
+        return webClient
+                .delete()
+                .uri(requestUri, id)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public ResponseEntity<UsersResponse> updateUser(Long id, UsersRequest request) {
-        return webClient.put().uri(requestUri, id).body(request, UsersRequest.class).retrieve().toEntity(UsersResponse.class).block();
+    public UsersResponse updateUser(Long id, UsersRequest request) {
+        return webClient
+                .put()
+                .uri(requestUri, id)
+                .body(Mono.just(request), UsersRequest.class)
+                .retrieve()
+                .bodyToMono(UsersResponse.class)
+                .block();
     }
 
-    public ResponseEntity<UsersResponse> getUser(Long id) {
-        return webClient.get().uri(requestUri, id).retrieve().toEntity(UsersResponse.class).block();
+    public UsersResponse getUser(Long id) {
+        return webClient
+                .get()
+                .uri(requestUri, id)
+                .retrieve()
+                .bodyToMono(UsersResponse.class)
+                .block();
     }
 
 

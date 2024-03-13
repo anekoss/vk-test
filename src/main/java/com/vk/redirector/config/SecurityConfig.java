@@ -21,9 +21,9 @@ public class SecurityConfig {
                 .and()
                 .csrf()
                 .disable()
-//                .authorizeHttpRequests(customizer -> customizer.anyRequest().authenticated())
+                .authorizeHttpRequests(customizer -> customizer.anyRequest().authenticated())
                 .httpBasic()
-//                .authenticationEntryPoint((request, response, authException) -> response.sendError(401))
+                .authenticationEntryPoint((request, response, authException) -> response.sendError(401))
                 .and()
                 .build();
     }

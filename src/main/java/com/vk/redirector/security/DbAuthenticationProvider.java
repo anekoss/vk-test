@@ -19,7 +19,7 @@ class DbAuthenticationProvider implements AuthenticationProvider {
         if (!"password".equals(password)) {
             throw new AuthenticationServiceException("Invalid username or password");
         }
-        return userRepository.findByName(authentication.getName())
+        return userRepository.findByUsername(authentication.getName())
                 .map(user -> new PlainAuthentication(user.getId()))
                 .orElseThrow(() -> new AuthenticationServiceException("Invalid username or password"));
     }
