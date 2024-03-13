@@ -16,8 +16,8 @@ public class PostsService {
     private final WebClient webClient;
     private final String requestUri = "/posts/{id}";
 
-    public ResponseEntity<PostsResponse> addPost(Long id, AddPostsRequest request) {
-        return webClient.post().uri(requestUri, id).body(request, AddPostsRequest.class).retrieve().toEntity(PostsResponse.class).block();
+    public ResponseEntity<PostsResponse> addPost(AddPostsRequest request) {
+        return webClient.post().uri("/posts").body(request, AddPostsRequest.class).retrieve().toEntity(PostsResponse.class).block();
     }
 
     public ResponseEntity<Void> deletePost(Long id) {

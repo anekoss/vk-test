@@ -1,8 +1,8 @@
 package com.vk.redirector.service;
 
 import com.vk.redirector.dto.AddAlbumsRequest;
-import com.vk.redirector.dto.AlbumsResponse;
 import com.vk.redirector.dto.AlbumsRequest;
+import com.vk.redirector.dto.AlbumsResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ public class AlbumsService {
     private final WebClient webClient;
     private final String requestUri = "/albums/{id}";
 
-    public ResponseEntity<AlbumsResponse> addAlbum(Long id, AddAlbumsRequest request) {
-        return webClient.post().uri(requestUri, id).body(request, AddAlbumsRequest.class).retrieve().toEntity(AlbumsResponse.class).block();
+    public ResponseEntity<AlbumsResponse> addAlbum(AddAlbumsRequest request) {
+        return webClient.post().uri("/albums").body(request, AddAlbumsRequest.class).retrieve().toEntity(AlbumsResponse.class).block();
     }
 
     public ResponseEntity<Void> deleteAlbum(Long id) {
