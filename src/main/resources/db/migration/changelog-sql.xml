@@ -1,0 +1,11 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.21.xsd">
+    <changeSet id="init_tables" author="anekoss">
+        <sqlFile path="db/sql/create_roles_table.sql"/>
+        <sqlFile path="db/sql/create_children_roles_table.sql"/>
+        <sqlFile path="db/sql/create_user_table.sql"/>
+    </changeSet>
+</databaseChangeLog>

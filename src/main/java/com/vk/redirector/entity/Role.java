@@ -1,31 +1,31 @@
 package com.vk.redirector.entity;
 
-import com.vk.redirector.domain.RoleType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PACKAGE;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
-@Getter
-@Setter(PACKAGE)
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false, unique = true)
+    private String roleType;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column
-    private RoleType type;
+    @OneToMany(
+            mappedBy = "role",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<UserRoles> users = new HashSet<>();
+
 
 }
