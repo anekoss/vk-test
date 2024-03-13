@@ -5,7 +5,13 @@
  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.21.xsd">
     <changeSet id="init_tables" author="anekoss">
         <sqlFile path="db/sql/create_roles_table.sql"/>
-        <sqlFile path="db/sql/create_children_roles_table.sql"/>
         <sqlFile path="db/sql/create_user_table.sql"/>
+        <sqlFile path="db/sql/create_user_roles_table.sql"/>
+        <sqlFile path="db/sql/create_audit_table.sql"/>
+    </changeSet>
+    <changeSet id="insert_values" author="anekoss">
+        <sqlFile path="db/sql/insert_role_table_values.sql"/>
+        <sqlFile path="db/sql/insert_user_table_values.sql"/>
+        <sqlFile path="db/sql/insert_user_roles_table_values.sql"/>
     </changeSet>
 </databaseChangeLog>

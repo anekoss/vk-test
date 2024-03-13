@@ -18,10 +18,11 @@ public record UsersRequest(@JsonProperty("id") Long id,
     record Geo(@JsonProperty("lat") String lat, @JsonProperty("lng") String lng) {
 
     }
-}
 
-record Company(@JsonProperty("name") String name,
-               @JsonProperty("catchPhrase") String catchPhrase,
-               @JsonProperty("bs") String bs) {
 
+    record Company(@JsonProperty("name") String name,
+                   @JsonProperty("catchPhrase") String catchPhrase,
+                   @JsonProperty("bs") String bs) {
+
+    }
 }

@@ -1,26 +1,29 @@
 package com.vk.redirector.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.OffsetDateTime;
 
-@Table
-@Entity(name = "audit")
+
+@Getter
+@Setter
+@Entity
+@Table(name = "audit")
 public class Audit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
-
-    @ManyToOne
-    private Role role;
-
-    private boolean userHasPrivilege;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private OffsetDateTime time;
-    private String path;
+    private OffsetDateTime timestamp;
+    private String username;
+    private boolean hasAccess;
+    private String requestParams;
+    private long executionTime;
+    private int responseCode;
+    private String responseMessage;
+    private String uri;
 
 }
