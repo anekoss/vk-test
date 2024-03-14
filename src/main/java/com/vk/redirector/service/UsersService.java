@@ -4,6 +4,7 @@ package com.vk.redirector.service;
 import com.vk.redirector.dto.AddUsersRequest;
 import com.vk.redirector.dto.UsersRequest;
 import com.vk.redirector.dto.UsersResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public class UsersService {
     private final WebClient webClient;
     private final String requestUri = "/users/{id}";
 
-    public UsersResponse addUser(AddUsersRequest request) {
+    public UsersResponse addUser(@NotNull AddUsersRequest request) {
         return webClient
                 .post()
                 .uri("/users")
@@ -30,7 +31,7 @@ public class UsersService {
                 .block();
     }
 
-    public String deleteUser(Long id) {
+    public String deleteUser(@NotNull Long id) {
         return webClient
                 .delete()
                 .uri(requestUri, id)
@@ -39,7 +40,7 @@ public class UsersService {
                 .block();
     }
 
-    public UsersResponse updateUser(Long id, UsersRequest request) {
+    public UsersResponse updateUser(@NotNull Long id, @NotNull UsersRequest request) {
         return webClient
                 .put()
                 .uri(requestUri, id)
@@ -49,7 +50,7 @@ public class UsersService {
                 .block();
     }
 
-    public UsersResponse getUser(Long id) {
+    public UsersResponse getUser(@NotNull Long id) {
         return webClient
                 .get()
                 .uri(requestUri, id)

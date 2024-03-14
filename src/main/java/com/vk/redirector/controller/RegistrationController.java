@@ -2,6 +2,7 @@ package com.vk.redirector.controller;
 
 import com.vk.redirector.entity.User;
 import com.vk.redirector.security.UserService;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,8 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String register(
-            @RequestParam String username,
-            @RequestParam String password
+            @RequestParam @NotNull String username,
+            @RequestParam @NotNull String password
     ) {
         User newUser = new User();
         newUser.setUsername(username);

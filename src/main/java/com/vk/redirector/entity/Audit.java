@@ -17,13 +17,21 @@ public class Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "timestamp")
     private OffsetDateTime timestamp;
+    @Column(name = "username")
     private String username;
-    private boolean hasAccess;
+
+    @Column(name = "access")
+    private boolean access;
+
+    @Column(name = "params")
     private String requestParams;
-    private long executionTime;
+
+    @Column(name = "response_code")
     private int responseCode;
-    private String responseMessage;
+
+    @Column(name = "uri")
     private String uri;
 
 }

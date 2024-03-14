@@ -3,6 +3,7 @@ package com.vk.redirector.service;
 import com.vk.redirector.dto.AddAlbumsRequest;
 import com.vk.redirector.dto.AlbumsRequest;
 import com.vk.redirector.dto.AlbumsResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class AlbumsService {
     private final WebClient webClient;
     private final String requestUri = "/albums/{id}";
 
-    public AlbumsResponse addAlbum(AddAlbumsRequest request) {
+    public AlbumsResponse addAlbum(@NotNull AddAlbumsRequest request) {
         return webClient
                 .post()
                 .uri("/albums")
@@ -26,11 +27,11 @@ public class AlbumsService {
                 .block();
     }
 
-    public String deleteAlbum(Long id) {
+    public String deleteAlbum(@NotNull Long id) {
         return webClient.delete().uri(requestUri, id).retrieve().bodyToMono(String.class).block();
     }
 
-    public AlbumsResponse updateAlbum(Long id, AlbumsRequest request) {
+    public AlbumsResponse updateAlbum(@NotNull Long id, @NotNull AlbumsRequest request) {
         return webClient
                 .put()
                 .uri(requestUri, id)
@@ -40,7 +41,7 @@ public class AlbumsService {
                 .block();
     }
 
-    public AlbumsResponse getAlbum(Long id) {
+    public AlbumsResponse getAlbum(@NotNull Long id) {
         return webClient.get().uri(requestUri, id).retrieve().bodyToMono(AlbumsResponse.class).block();
     }
 

@@ -1,5 +1,7 @@
 package com.vk.redirector.domain;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Set;
 
 public enum RoleType implements Role {
@@ -13,7 +15,7 @@ public enum RoleType implements Role {
 
     private final Set<Role> childrenRoles;
 
-    RoleType(Set<Role> childrenRoles) {
+    RoleType(@NotNull Set<Role> childrenRoles) {
         this.childrenRoles = childrenRoles;
     }
 
@@ -22,7 +24,7 @@ public enum RoleType implements Role {
     }
 
     @Override
-    public boolean includes(Role role) {
+    public boolean includes(@NotNull Role role) {
         return this.equals(role) || childrenRoles.stream().anyMatch(r -> r.includes(role));
     }
 }

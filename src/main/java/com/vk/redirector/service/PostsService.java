@@ -3,6 +3,7 @@ package com.vk.redirector.service;
 import com.vk.redirector.dto.AddPostsRequest;
 import com.vk.redirector.dto.PostsRequest;
 import com.vk.redirector.dto.PostsResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class PostsService {
     private final WebClient webClient;
     private final String requestUri = "/posts/{id}";
 
-    public PostsResponse addPost(AddPostsRequest request) {
+    public PostsResponse addPost(@NotNull AddPostsRequest request) {
         return webClient
                 .post()
                 .uri("/posts")
@@ -25,7 +26,7 @@ public class PostsService {
                 .bodyToMono(PostsResponse.class).block();
     }
 
-    public String deletePost(Long id) {
+    public String deletePost(@NotNull Long id) {
         return webClient
                 .delete()
                 .uri(requestUri, id)
@@ -34,7 +35,7 @@ public class PostsService {
                 .block();
     }
 
-    public PostsResponse updatePost(Long id, PostsRequest request) {
+    public PostsResponse updatePost(@NotNull Long id, @NotNull PostsRequest request) {
         return webClient
                 .put()
                 .uri(requestUri, id)
@@ -44,7 +45,7 @@ public class PostsService {
                 .block();
     }
 
-    public PostsResponse getPost(Long id) {
+    public PostsResponse getPost(@NotNull Long id) {
         return webClient
                 .get()
                 .uri(requestUri, id)

@@ -1,4 +1,7 @@
 package com.vk.redirector.dto;
 
-public record AddPostsRequest(Long userId, String title, String body) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record AddPostsRequest(@NotNull Long userId, @NotBlank String title, @NotBlank String body) {
 }

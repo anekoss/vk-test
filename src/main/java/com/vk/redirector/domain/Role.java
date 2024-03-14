@@ -7,7 +7,7 @@ public interface Role {
 
     boolean includes(Role role);
 
-    default Set<Role> roots() {
+    static Set<Role> roots() {
         return Set.of(ROLE_ADMIN);
     }
 }

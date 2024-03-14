@@ -1,5 +1,6 @@
 package com.vk.redirector.security;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +11,7 @@ import static java.util.Collections.emptySet;
 
 @RequiredArgsConstructor
 public class PlainAuthentication implements Authentication {
-    private final Long userId;
+    private final String username;
     private volatile boolean authenticated = true;
 
     @Override
@@ -20,12 +21,12 @@ public class PlainAuthentication implements Authentication {
 
     @Override
     public Long getPrincipal() {
-        return userId;
+        return null;
     }
 
     @Override
     public String getName() {
-        return "";
+        return username;
     }
 
     @Override

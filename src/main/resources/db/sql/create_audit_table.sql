@@ -7,11 +7,10 @@ create table audit
     id              bigint generated always as identity primary key,
     timestamp       timestamp,
     username        text,
-    hasAccess       bool,
-    requestParams   text,
-    executionTime   bigint,
-    responseCode    int,
-    responseMessage text,
+    access       bool,
+    params   text,
+    response_code    int,
+    response_message text,
     uri             text
 );
 -- rollback DROP TABLE audit;

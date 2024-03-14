@@ -5,7 +5,10 @@ import com.vk.redirector.domain.Role;
 import com.vk.redirector.entity.User;
 import com.vk.redirector.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +20,16 @@ import java.util.Set;
 public class RoleService {
     private final UserRepository userRepository;
 
+    private static UsernamePasswordAuthenticationToken getCurrentAuthentication() {
+        return (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+    }
+
     @Transactional
-    public boolean hasAnyRole(Role... roles) {
-        final Long id = getCurrentAuthentication().getPrincipal();
-        final Optional<User> user = userRepository.findById(id);
+    public boolean hasAnyRole(Role... roles) throws AccessDeniedException, UsernameNotFoundException {
+        final String userName = getCurrentAuthentication().getName();
+        final Optional<User> user = userRepository.findByUsername(userName);
         if (user.isEmpty()) {
-            return false;
+            throw new UsernameNotFoundException("Not authenticate user");
         }
         Set<com.vk.redirector.entity.Role> roleSet = user.get().getRoles();
         for (Role role : roles) {
@@ -30,11 +37,6 @@ public class RoleService {
                 return true;
             }
         }
-        return false;
-    }
-
-
-    private static PlainAuthentication getCurrentAuthentication() {
-        return (PlainAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        throw new AccessDeniedException("User doesn't have privilege");
     }
 }

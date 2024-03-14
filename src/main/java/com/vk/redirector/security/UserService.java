@@ -6,16 +6,18 @@ import com.vk.redirector.repository.RoleRepository;
 import com.vk.redirector.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.vk.redirector.domain.RoleType.ROLE_ADMIN;
 import static com.vk.redirector.domain.RoleType.ROLE_USERS_VIEWER;
 
 @Service
@@ -31,7 +33,7 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(@NotBlank String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
@@ -40,7 +42,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void saveUser(User user) {
+    public void saveUser(@NotNull User user) {
         Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
         if (userFromDB.isPresent()) {
             return;
